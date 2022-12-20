@@ -1,20 +1,51 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+//This program is designed to searchthe Hacker Algolia api and output a list of results
+//Results include the article title ad the associated url.
+//A History screen is also present to show all searches from your session. Thank you!
+//best, Michaela Gallucci
 
-export default function App() {
+import { Text, View, Button } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+//Import the two screens for navigation in the main page
+import HistoryScreen from './screens/History.js';
+import SearchScreen from './screens/Search.js';
+
+
+function HomeScreen( { navigation }) {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    //Basic screen UI with buttons to go to the Search Screen or the History Screen, described 
+    //in the comments at the top of this file.
+
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Welcome to the home screen!</Text>
+      <Text> Please select an option below:</Text>
+      <Button
+      title="Run a Search!"
+      onPress={() => navigation.navigate('SearchScreen')}
+      />
+    
+      <Button
+      title="Check your search history!"
+      onPress={() => navigation.navigate('HistoryScreen')}
+      />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const Stack = createNativeStackNavigator();
+
+function App() {
+  return (
+    //Implementing necessary components for screen to screen navigation
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="SearchScreen" component={SearchScreen} />
+        <Stack.Screen name="HistoryScreen" component={HistoryScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default App;
